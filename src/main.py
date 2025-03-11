@@ -1,6 +1,20 @@
 import flet as ft
 
+
 def main(page: ft.Page):
+    
+    def handle_close(e):
+        page.close(addItemDialog)
+    
+    addItemDialog = ft.AlertDialog(
+        modal=True,
+        title=ft.Text("Adicionar Novo Item Ao Pedido"),
+        actions=[
+            ft.FilledButton(text="Cancelar", on_click=handle_close),
+            ft.FilledButton(text="Adicionar Item", on_click=handle_close)
+        ],
+        on_dismiss=lambda e: page.add()
+    )
     
     def table_cell(cell_content):
         return ft.DataCell(ft.Text(cell_content))
@@ -10,20 +24,12 @@ def main(page: ft.Page):
     itens_pedido = ft.DataRow(cells=[table_cell(contItens_pedido), table_cell("teste"),table_cell("teste"), table_cell("teste"), table_cell("teste")])
     
     def updateItem_table(cont):
-        return 
-        page.add(ft.DataRow(
-            ft.DataCell(ft.Text(cont)),
-            ft.DataCell(ft.Text("teste")),
-            ft.DataCell(ft.Text("teste")),
-            ft.DataCell(ft.Text("teste")),
-            ft.DataCell(ft.Text("teste"))
-        ))
+        pass
+        
     
     def addItem_clicked(e):
-        rowTable = []
-        contItens_pedido += 1
-        item = [table_cell(contItens_pedido), table_cell("teste"),table_cell("teste"), table_cell("teste"), table_cell("teste")]
-        itens_pedido.append(ft.DataRow(cells=item))
+        
+        pass
     
     page.add(
         
@@ -52,10 +58,19 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("Valor")),
             ft.DataColumn(ft.Text("Ações"))
         ],
-            rows=itens_pedido)
+        rows=[
+            ft.DataRow([
+                ft.DataCell(ft.Text("1")),
+                ft.DataCell(ft.Text("Pizza Calabresa")),
+                ft.DataCell(ft.Text("1")),
+                ft.DataCell(ft.Text("35.50")),
+                ft.DataCell(ft.Text("Exemplo"))
+            ])
+        ],
+        ),
     )
         
-    page.add(ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=addItem_clicked))
+    page.add(ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=lambda e: page.open(addItemDialog)))
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.update()
     
